@@ -1,5 +1,9 @@
-from bot.core.bot import DiscordSuperUtilsBot
 import json
+
+import discord
+import discordSuperUtils
+
+from bot.core.bot import DiscordSuperUtilsBot
 
 
 def load_token(file: str) -> str:
@@ -17,7 +21,8 @@ def load_token(file: str) -> str:
 
 
 def main():
-    bot = DiscordSuperUtilsBot(load_token("config.json"), command_prefix=".")
+    bot = DiscordSuperUtilsBot(load_token("config.json"), command_prefix=".", intents=discord.Intents.all())
+    discordSuperUtils.CommandHinter(bot)
     bot.run()
 
 
