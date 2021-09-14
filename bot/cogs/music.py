@@ -180,14 +180,15 @@ class Music(commands.Cog, discordSuperUtils.CogManager.Cog):
 
     @commands.command()
     async def history(self, ctx):
-        embeds = discordSuperUtils.generate_embeds(await self.MusicManager.history(ctx),
-                                                   "Song History",
-                                                   "Shows all played songs",
-                                                   25,
-                                                   string_format="Title: '{}'")
+        if history := await self.MusicManager.history(ctx):
+            embeds = discordSuperUtils.generate_embeds(history,
+                                                       "Song History",
+                                                       "Shows all played songs",
+                                                       25,
+                                                       string_format="Title: '{}'")
 
-        page_manager = discordSuperUtils.PageManager(ctx, embeds, public=True)
-        await page_manager.run()
+            page_manager = discordSuperUtils.PageManager(ctx, embeds, public=True)
+            await page_manager.run()
 
     @commands.command()
     async def skip(self, ctx, index: int = None):
@@ -200,13 +201,14 @@ class Music(commands.Cog, discordSuperUtils.CogManager.Cog):
 
     @commands.command()
     async def queue(self, ctx):
-        embeds = discordSuperUtils.generate_embeds(await self.MusicManager.get_queue(ctx),
-                                                   "Queue",
-                                                   f"Now Playing: {await self.MusicManager.now_playing(ctx)}",
-                                                   25,
-                                                   string_format="Title: '{}'")
-        page_manager = discordSuperUtils.PageManager(ctx, embeds, public=True)
-        await page_manager.run()
+        if queue := await self.MusicManager.get_queue(ctx):
+            embeds = discordSuperUtils.generate_embeds(queue,
+                                                       "Queue",
+                                                       f"Now Playing: {await self.MusicManager.now_playing(ctx)}",
+                                                       25,
+                                                       string_format="Title: '{}'")
+            page_manager = discordSuperUtils.PageManager(ctx, embeds, public=True)
+            await page_manager.run()
 
 
 def setup(bot):
