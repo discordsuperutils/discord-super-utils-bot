@@ -1,7 +1,7 @@
 import discordSuperUtils
 from discord.ext import commands
 
-from bot.constants import welcome_channel_id
+from bot.constants import welcome_channel_id, member_role_id
 
 
 class Imaging(commands.Cog, discordSuperUtils.CogManager.Cog):
@@ -14,6 +14,9 @@ class Imaging(commands.Cog, discordSuperUtils.CogManager.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, guild, member):
         channel = guild.get_channel(welcome_channel_id)
+        member_role = guild.get_role(member_role_id)
+
+        await member.add_roles(member_role)
 
         await channel.send(
             file=await self.ImageManager.create_welcome_card(
