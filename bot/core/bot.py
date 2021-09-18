@@ -39,7 +39,9 @@ class DiscordSuperUtilsBot(commands.Bot):
                 self.load_extension(f'{directory}.{file.replace(".py", "")}')
                 logging.info(f"Loaded cog {file}")
             except Exception as e:
-                logging.critical(f"An exception has been raised when loading cog {file}")
+                logging.critical(
+                    f"An exception has been raised when loading cog {file}"
+                )
                 raise e
 
     def run(self) -> None:
