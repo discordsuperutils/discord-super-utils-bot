@@ -4,6 +4,8 @@ from discord.ext import commands
 import logging
 import os
 
+from constants import dsu_guild_id
+
 __all__ = ("DiscordSuperUtilsBot",)
 
 
@@ -20,6 +22,13 @@ class DiscordSuperUtilsBot(commands.Bot):
 
     async def on_ready(self):
         print(f"{self.user} is ready.")
+
+    async def on_message(self, message):
+        if not message.guild or message.guild.id != dsu_guild_id and message.command:
+            await message.reply("I am only usable in the DSU server! discord.gg/zhwcpTBBeC")
+            return
+
+        await self.process_commands(message)
 
     def load_cogs(self, directory: str) -> None:
         """
