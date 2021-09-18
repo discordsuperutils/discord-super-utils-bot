@@ -1,7 +1,7 @@
 import discordSuperUtils
 from discord.ext import commands
 
-from ..constants import welcome_channel_id
+from bot.constants import welcome_channel_id
 
 
 class Imaging(commands.Cog, discordSuperUtils.CogManager.Cog):

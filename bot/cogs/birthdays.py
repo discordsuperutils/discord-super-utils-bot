@@ -6,7 +6,7 @@ import discordSuperUtils
 import pytz
 from discord.ext import commands
 
-from ..constants import birthday_channel_id
+from bot.constants import birthday_channel_id
 
 
 def ordinal(num: int) -> str:
