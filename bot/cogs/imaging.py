@@ -12,9 +12,9 @@ class Imaging(commands.Cog, discordSuperUtils.CogManager.Cog):
         super().__init__()
 
     @commands.Cog.listener()
-    async def on_member_join(self, guild, member):
-        channel = guild.get_channel(welcome_channel_id)
-        member_role = guild.get_role(member_role_id)
+    async def on_member_join(self, member):
+        channel = member.guild.get_channel(welcome_channel_id)
+        member_role = member.guild.get_role(member_role_id)
 
         await member.add_roles(member_role)
 
