@@ -24,6 +24,9 @@ class DiscordSuperUtilsBot(commands.Bot):
         print(f"{self.user} is ready.")
 
     async def on_message(self, message):
+        if message.author.bot:
+            return
+
         if not message.guild or message.guild.id != dsu_guild_id and message.command:
             await message.reply("I am only usable in the DSU server! discord.gg/zhwcpTBBeC")
             return
