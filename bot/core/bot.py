@@ -28,7 +28,9 @@ class DiscordSuperUtilsBot(commands.Bot):
             return
 
         if not message.guild or message.guild.id != dsu_guild_id and message.command:
-            await message.reply("I am only usable in the DSU server! discord.gg/zhwcpTBBeC")
+            await message.reply(
+                "I am only usable in the DSU server! discord.gg/zhwcpTBBeC"
+            )
             return
 
         await self.process_commands(message)

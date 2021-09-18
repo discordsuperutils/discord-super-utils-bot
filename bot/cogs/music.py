@@ -88,7 +88,7 @@ class Music(commands.Cog, discordSuperUtils.CogManager.Cog):
                 )
             )
 
-    @commands.command()
+    @commands.command(aliases=["nowplaying"])
     async def np(self, ctx):
         if player := await self.MusicManager.now_playing(ctx):
             duration_played = await self.MusicManager.get_player_played_duration(
@@ -123,7 +123,7 @@ class Music(commands.Cog, discordSuperUtils.CogManager.Cog):
                 )
             )
 
-    @commands.command()
+    @commands.command(aliases=["p"])
     async def play(self, ctx, *, query: str):
         if not ctx.voice_client or not ctx.voice_client.is_connected():
             await self.MusicManager.join(ctx)
