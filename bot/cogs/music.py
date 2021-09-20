@@ -36,7 +36,7 @@ class Music(commands.Cog, discordSuperUtils.CogManager.Cog):
             discordSuperUtils.QueueEmpty: "The queue is empty!",
             discordSuperUtils.AlreadyConnected: "I am already connected to a voice channel!",
             discordSuperUtils.QueueError: "There has been a queue error!",
-            discordSuperUtils.SkipError: "There has been an error while skipping!",
+            discordSuperUtils.SkipError: "There is no song to skip to!",
             discordSuperUtils.UserNotConnected: "User is not connected to a voice channel!",
             discordSuperUtils.InvalidSkipIndex: "That skip index is invalid!",
         }
@@ -210,16 +210,16 @@ class Music(commands.Cog, discordSuperUtils.CogManager.Cog):
 
     @commands.command()
     async def skip(self, ctx, index: int = None):
-        skipped_player = await self.MusicManager.skip(ctx, index)
-        await ctx.send(
-            embed=discord.Embed(
-                title=f"Skipped to {index}"
-                if index is not None
-                else "Skipped to Next Song",
-                description=f"Skipped to '{skipped_player}'.",
-                color=0x00FF00,
+        if skipped_player := await self.MusicManager.skip(ctx, index):
+            await ctx.send(
+                embed=discord.Embed(
+                    title=f"Skipped to {index}"
+                    if index is not None
+                    else "Skipped to Next Song",
+                    description=f"Skipped to '{skipped_player}'.",
+                    color=0x00FF00,
+                )
             )
-        )
 
     @commands.command()
     async def lyrics(self, ctx, query: str = None):
@@ -256,7 +256,7 @@ class Music(commands.Cog, discordSuperUtils.CogManager.Cog):
         if queue := await self.MusicManager.get_queue(ctx):
             formatted_queue = [
                 f"Title: '{x.title}\nRequester: {x.requester and x.requester.mention}"
-                for x in queue.queue
+                for x in queue.queue            
             ]
 
             embeds = discordSuperUtils.generate_embeds(

@@ -30,24 +30,26 @@ class Leveling(commands.Cog, discordSuperUtils.CogManager.Cog):
         )
 
     @commands.command()
-    async def rank(self, ctx):
-        member_data = await self.LevelingManager.get_account(ctx.author)
+    async def rank(self, ctx, member: discord.Member = None):
+        member = member or ctx.author  # Instead of if statement
+
+        member_data = await self.LevelingManager.get_account(member)
 
         if not member_data:
             await ctx.send(
-                f"I am still creating your account! please wait a few seconds."
+                f"The specified member does not have an account yet!"
             )
             return
 
         guild_leaderboard = await self.LevelingManager.get_leaderboard(ctx.guild)
-        member = [x for x in guild_leaderboard if x.member == ctx.author]
+        leveling_member = [x for x in guild_leaderboard if x.member == member]
 
         image = await self.ImageManager.create_leveling_profile(
-            ctx.author,
+            member,
             member_data,
             discordSuperUtils.Backgrounds.GALAXY,
             (127, 255, 0),
-            guild_leaderboard.index(member[0]) + 1 if member else -1,
+            guild_leaderboard.index(leveling_member[0]) + 1 if leveling_member else -1,
             outline=5,
         )
         await ctx.send(file=image)
