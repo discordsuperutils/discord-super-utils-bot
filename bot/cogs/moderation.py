@@ -81,6 +81,7 @@ class Moderation(commands.Cog, discordSuperUtils.CogManager.Cog):
         await self.MuteManager.connect_to_database(database, ["mutes"])
 
     @commands.command()
+    @commands.has_permissions(administrator=True)
     async def mute(
         self,
         ctx,
@@ -96,6 +97,7 @@ class Moderation(commands.Cog, discordSuperUtils.CogManager.Cog):
             await ctx.send(f"{member} has been muted. Reason: {reason}")
 
     @commands.command()
+    @commands.has_permissions(administrator=True)
     async def unmute(self, ctx, member: discord.Member):
         if await self.MuteManager.unmute(member):
             await ctx.send(f"{member.mention} has been unmuted.")
@@ -103,6 +105,7 @@ class Moderation(commands.Cog, discordSuperUtils.CogManager.Cog):
             await ctx.send(f"{member.mention} is not muted!")
 
     @commands.command()
+    @commands.has_permissions(administrator=True)
     async def ban(
         self,
         ctx,
@@ -114,6 +117,7 @@ class Moderation(commands.Cog, discordSuperUtils.CogManager.Cog):
         await self.BanManager.ban(member, reason, time_of_ban)
 
     @commands.command()
+    @commands.has_permissions(administrator=True)
     async def unban(self, ctx, user: discord.User):
         if await self.BanManager.unban(user, guild=ctx.guild):
             await ctx.send(f"{user} has been unbanned.")
@@ -130,6 +134,7 @@ class Moderation(commands.Cog, discordSuperUtils.CogManager.Cog):
         ).run()
 
     @infractions.command()
+    @commands.has_permissions(administrator=True)
     async def add(
         self, ctx, member: discord.Member, reason: str = "No reason specified."
     ):
@@ -196,6 +201,7 @@ class Moderation(commands.Cog, discordSuperUtils.CogManager.Cog):
         ).run()
 
     @infractions.command()
+    @commands.has_permissions(administrator=True)
     async def clear(self, ctx, member: discord.Member):
         removed_infractions = []
 
@@ -208,6 +214,7 @@ class Moderation(commands.Cog, discordSuperUtils.CogManager.Cog):
         ).run()
 
     @infractions.command()
+    @commands.has_permissions(administrator=True)
     async def remove(self, ctx, member: discord.Member, infraction_id: str):
         infractions_found = await self.InfractionManager.get_infractions(
             member, infraction_id=infraction_id
@@ -238,6 +245,7 @@ class Moderation(commands.Cog, discordSuperUtils.CogManager.Cog):
         await ctx.send(embed=embed)
 
     @infractions.command()
+    @commands.has_permissions(administrator=True)
     async def remove_before(
         self, ctx, member: discord.Member, from_time: discordSuperUtils.TimeConvertor
     ):
