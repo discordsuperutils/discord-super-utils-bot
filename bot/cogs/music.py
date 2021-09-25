@@ -265,7 +265,7 @@ class Music(commands.Cog, discordSuperUtils.CogManager.Cog):
         if queue := await self.MusicManager.get_queue(ctx):
             formatted_queue = [
                 f"Title: '{x.title}\nRequester: {x.requester and x.requester.mention}"
-                for x in queue.queue            
+                for x in queue.queue
             ]
 
             embeds = discordSuperUtils.generate_embeds(

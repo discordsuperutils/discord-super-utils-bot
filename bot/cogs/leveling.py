@@ -36,9 +36,7 @@ class Leveling(commands.Cog, discordSuperUtils.CogManager.Cog):
         member_data = await self.LevelingManager.get_account(member)
 
         if not member_data:
-            await ctx.send(
-                f"The specified member does not have an account yet!"
-            )
+            await ctx.send(f"The specified member does not have an account yet!")
             return
 
         guild_leaderboard = await self.LevelingManager.get_leaderboard(ctx.guild)
