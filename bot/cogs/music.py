@@ -151,21 +151,20 @@ class Music(commands.Cog, discordSuperUtils.CogManager.Cog):
 
     @commands.command()
     async def volume(self, ctx, volume: int = None):
-        current_volume = await self.MusicManager.volume(ctx, volume)
-
-        await ctx.send(
-            embed=discord.Embed(
-                title="Current Volume",
-                description=f"The current volume is {current_volume}%",
-                color=0x00FF00,
+        if current_volume := await self.MusicManager.volume(ctx, volume) is not None:
+            await ctx.send(
+                embed=discord.Embed(
+                    title="Current Volume",
+                    description=f"The current volume is {current_volume}%",
+                    color=0x00FF00,
+                )
+                if volume is None
+                else discord.Embed(
+                    title="Volume Changed",
+                    description=f"Volume has been changed to {current_volume}%",
+                    color=0x00FF00,
+                )
             )
-            if volume is None
-            else discord.Embed(
-                title="Volume Changed",
-                description=f"Volume has been changed to {current_volume}%",
-                color=0x00FF00,
-            )
-        )
 
     @commands.command()
     async def loop(self, ctx):
@@ -250,6 +249,16 @@ class Music(commands.Cog, discordSuperUtils.CogManager.Cog):
             await page_manager.run()
         else:
             await ctx.send("No lyrics found.")
+
+    @commands.command()
+    async def shuffle(self, ctx):
+        if is_shuffle := await self.MusicManager.shuffle(ctx) is not None:
+            await ctx.send(f"Shuffle toggled to {is_shuffle}")
+
+    @commands.command()
+    async def autoplay(self, ctx):
+        if is_autoplay := await self.MusicManager.autoplay(ctx) is not None:
+            await ctx.send(f"Autoplay toggled to {is_autoplay}")
 
     @commands.command()
     async def queue(self, ctx):

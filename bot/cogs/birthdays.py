@@ -45,9 +45,9 @@ class Birthday(commands.Cog, discordSuperUtils.CogManager.Cog):
         if channel:
             embed = discord.Embed(
                 title="Happy birthday!",
-                description=f"Happy {ordinal(await birthday_member.age() + 1)} birthday, {birthday_member.member.mention}!",
+                description=f"Happy {ordinal(await birthday_member.age())} birthday, {birthday_member.member.mention}!",
                 color=0x00FF00,
-            )  # TODO: change to raw on release
+            )
 
             embed.set_thumbnail(url=birthday_member.member.avatar_url)
 
