@@ -169,25 +169,25 @@ class Music(commands.Cog, discordSuperUtils.CogManager.Cog):
 
     @commands.command()
     async def loop(self, ctx):
-        loop_state = await self.MusicManager.loop(ctx)
-        await ctx.send(
-            embed=discord.Embed(
-                title="Loop Toggled",
-                description=f"Loop is now {'enabled' if loop_state else 'disabled'}.",
-                color=0x00FF00,
+        if loop_state := await self.MusicManager.loop(ctx) is not None:
+            await ctx.send(
+                embed=discord.Embed(
+                    title="Loop Toggled",
+                    description=f"Loop is now {'enabled' if loop_state else 'disabled'}.",
+                    color=0x00FF00,
+                )
             )
-        )
 
     @commands.command()
     async def queueloop(self, ctx):
-        loop_state = await self.MusicManager.queueloop(ctx)
-        await ctx.send(
-            embed=discord.Embed(
-                title="Queue Loop Toggled",
-                description=f"Queue loop is now {'enabled' if loop_state else 'disabled'}.",
-                color=0x00FF00,
+        if loop_state := await self.MusicManager.queueloop(ctx) is not None:
+            await ctx.send(
+                embed=discord.Embed(
+                    title="Queue Loop Toggled",
+                    description=f"Queue loop is now {'enabled' if loop_state else 'disabled'}.",
+                    color=0x00FF00,
+                )
             )
-        )
 
     @commands.command()
     async def history(self, ctx):
