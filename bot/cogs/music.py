@@ -168,7 +168,9 @@ class Music(commands.Cog, discordSuperUtils.CogManager.Cog):
 
     @commands.command()
     async def loop(self, ctx):
-        if loop_state := await self.MusicManager.loop(ctx) is not None:
+        loop_state = await self.MusicManager.loop(ctx)
+
+        if loop_state is not None:
             await ctx.send(
                 embed=discord.Embed(
                     title="Loop Toggled",
@@ -179,7 +181,9 @@ class Music(commands.Cog, discordSuperUtils.CogManager.Cog):
 
     @commands.command()
     async def queueloop(self, ctx):
-        if loop_state := await self.MusicManager.queueloop(ctx) is not None:
+        loop_state = await self.MusicManager.queueloop(ctx)
+
+        if loop_state is not None:
             await ctx.send(
                 embed=discord.Embed(
                     title="Queue Loop Toggled",
@@ -252,13 +256,29 @@ class Music(commands.Cog, discordSuperUtils.CogManager.Cog):
 
     @commands.command()
     async def shuffle(self, ctx):
-        if is_shuffle := await self.MusicManager.shuffle(ctx) is not None:
-            await ctx.send(f"Shuffle toggled to {is_shuffle}")
+        shuffle_state = await self.MusicManager.shuffle(ctx)
+
+        if shuffle_state is not None:
+            await ctx.send(
+                embed=discord.Embed(
+                    title="Shuffle Toggled",
+                    description=f"Shuffle is now {'enabled' if shuffle_state else 'disabled'}.",
+                    color=0x00FF00,
+                )
+            )
 
     @commands.command()
     async def autoplay(self, ctx):
-        if is_autoplay := await self.MusicManager.autoplay(ctx) is not None:
-            await ctx.send(f"Autoplay toggled to {is_autoplay}")
+        autoplay_state = await self.MusicManager.autoplay(ctx)
+
+        if autoplay_state is not None:
+            await ctx.send(
+                embed=discord.Embed(
+                    title="Autoplay Toggled",
+                    description=f"Autoplay is now {'enabled' if autoplay_state else 'disabled'}.",
+                    color=0x00FF00,
+                )
+            )
 
     @commands.command()
     async def queue(self, ctx):
