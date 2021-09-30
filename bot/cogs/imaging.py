@@ -22,9 +22,10 @@ class Imaging(commands.Cog, discordSuperUtils.CogManager.Cog):
             file=await self.ImageManager.create_welcome_card(
                 member,
                 discordSuperUtils.Backgrounds.GAMING,
-                (255, 255, 255),
                 f"Welcome, {member} 🔥",
-                "Welcome to discordSuperUtils, Please read the #rules.",
+                "Welcome to ?,! Please read the #rules.",
+                title_color=(127, 255, 0),
+                description_color=(127, 255, 0),
                 transparency=127,
             )
         )
