@@ -40,14 +40,14 @@ class Leveling(commands.Cog, discordSuperUtils.CogManager.Cog):
             return
 
         guild_leaderboard = await self.LevelingManager.get_leaderboard(ctx.guild)
-        leveling_member = [x for x in guild_leaderboard if x.member == member]
+        leveling_member_rank = [x for x in guild_leaderboard if x.member == member]
 
         image = await self.ImageManager.create_leveling_profile(
-            member,
-            member_data,
-            discordSuperUtils.Backgrounds.GALAXY,
-            (127, 255, 0),
-            guild_leaderboard.index(leveling_member[0]) + 1 if leveling_member else -1,
+            member=member,
+            member_account=member_data,
+            background=discordSuperUtils.Backgrounds.GALAXY,
+            rank=leveling_member_rank,
+            font_path=None,
             outline=5,
         )
         await ctx.send(file=image)
