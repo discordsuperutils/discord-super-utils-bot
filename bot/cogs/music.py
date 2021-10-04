@@ -151,7 +151,7 @@ class Music(commands.Cog, discordSuperUtils.CogManager.Cog):
 
     @commands.command()
     async def volume(self, ctx, volume: int = None):
-        if current_volume := await self.MusicManager.volume(ctx, volume) is not None:
+        if current_volume := await self.MusicManager.volume(ctx, volume):
             await ctx.send(
                 embed=discord.Embed(
                     title="Current Volume",
